@@ -112,7 +112,7 @@ const DatePicker = ({
   )
 
   // Sort selected dates before rendering
-  const sortedSelectedDates = selectedDates.slice().sort((a, b) => a.getTime() - b.getTime());
+  selectedDates.sort((a, b) => a.getTime() - b.getTime());
 
   return (
     <Dialog
@@ -134,7 +134,7 @@ const DatePicker = ({
     >
       {/* <DialogContent> */}
       <Calendar
-        selectedDates={sortedSelectedDates}
+        selectedDates={selectedDates}
         disabledDates={disabledDates}
         onSelect={onSelect}
         onRemoveAtIndex={onRemoveAtIndex}

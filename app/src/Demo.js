@@ -55,7 +55,7 @@ const Demo = () => {
   };
 
   const renderTags = (value, getTagProps) => {
-    const maxTags = 2; // Maximum number of tags to display
+    const maxTags = 3; // Maximum number of tags to display
     const limitedValue = value.slice(0, maxTags); // Limit the number of displayed tags
     const remainingCount = value.length - maxTags;
     
@@ -94,7 +94,7 @@ const Demo = () => {
         popupIcon={<EventIcon />}
         onOpen={toggleOpen}
         limitTags={3}
-        sx={{ width: 400 }}
+        sx={{ width: 500 }}
         onChange={(event, newValue) => setDates(newValue)}
         onInputChange={handleInputChange}
         renderTags={renderTags}
