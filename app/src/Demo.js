@@ -93,6 +93,7 @@ const Demo = () => {
         inputValue={inputValue}
         popupIcon={<EventIcon />}
         onOpen={toggleOpen}
+        onFocus={(event) => event.target.blur()}
         limitTags={3}
         sx={{ width: 500 }}
         onChange={(event, newValue) => setDates(newValue)}
