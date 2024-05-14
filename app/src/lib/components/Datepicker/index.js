@@ -4,7 +4,7 @@ import DateUtilities from './utils'
 import Calendar from './Calendar'
 import { Dialog, useTheme } from '@mui/material'
 
-function initState (selectedDates) {
+function initState(selectedDates) {
   return {
     selectedDates: selectedDates ? [...selectedDates] : [],
     minDate: null,
@@ -12,12 +12,12 @@ function initState (selectedDates) {
   }
 }
 
-function reducer (state, action) {
+function reducer(state, action) {
   switch (action.type) {
     case 'setSelectedDates':
       return { ...state, selectedDates: action.payload }
     default:
-      return new Error('wrong action type in multiple date picker reducer')
+      throw new Error('Wrong action type in multiple date picker reducer')
   }
 }
 
