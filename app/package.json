@@ -4,25 +4,25 @@
   "private": true,
   "homepage": "https://randex.github.io/material-ui-multiple-dates-picker/",
   "dependencies": {
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
     "moment": "^2.24.0",
+    "react-scripts": "^5.0.1",
     "warning": "^4.0.3"
   },
   "devDependencies": {
-    "@mui/icons-material": "^5.10.9",
-    "@mui/lab": "^5.0.0-alpha.103",
-    "@mui/material": "^5.10.9",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.103",
+    "@mui/material": "^5.15.17",
+    "@types/warning": "^3.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/lab": "^5.0.0-alpha.103",
-    "@mui/material": "^5.10.9",
     "react": "^18.2.0"
   },
   "scripts": {

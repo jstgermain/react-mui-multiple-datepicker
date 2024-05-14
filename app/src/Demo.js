@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   styled,
-  useTheme,
   Autocomplete,
   TextField,
   Chip,
@@ -19,7 +18,6 @@ const BoxRoot = styled("div")(({ theme }) => ({
 }));
 
 const Demo = () => {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [dates, setDates] = useState([]);
   const [inputValue, setInputValue] = useState("");
