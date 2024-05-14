@@ -1,5 +1,8 @@
 import React from "react";
-import { Box, Typography, Chip, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Clear";
 import moment from "moment";
 
@@ -63,7 +66,6 @@ const DateDisplay: React.FC<DateDisplayProps> = ({
             label={getFormattedDate(date)}
             onDelete={!readOnly ? removeDateAtIndex(index) : undefined}
             deleteIcon={!readOnly ? <DeleteIcon /> : undefined}
-            color={!readOnly ? "primary" : undefined}
             sx={{
               m: 0.5,
             }}

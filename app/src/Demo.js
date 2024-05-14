@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import {
-  styled,
-  Autocomplete,
-  TextField,
-  Chip,
-} from "@mui/material";
+import { Chip, styled, Autocomplete, TextField, useTheme } from "@mui/material";
 import MultipleDatePicker from "./lib";
-import EventIcon from '@mui/icons-material/Event';
+import EventIcon from "@mui/icons-material/Event";
 
 const BoxRoot = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -18,22 +13,23 @@ const BoxRoot = styled("div")(({ theme }) => ({
 }));
 
 const Demo = () => {
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [dates, setDates] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null); // Create a ref for the TextField component
 
   const toggleOpen = useCallback(() => {
-    setOpen(o => !o);
+    setOpen((o) => !o);
     if (!open && inputRef.current) {
       inputRef.current.blur(); // Blur the TextField to prevent typing
     }
   }, [open]);
 
   const onCancel = useCallback(() => setOpen(false), []);
-  
-  const onSubmit = useCallback(selectedDates => {
-    setDates(selectedDates.map(date => date.toLocaleDateString()));
+
+  const onSubmit = useCallback((selectedDates) => {
+    setDates(selectedDates.map((date) => date.toLocaleDateString()));
     setOpen(false);
     inputRef.current.blur();
   }, []);
@@ -42,37 +38,15 @@ const Demo = () => {
     setInputValue(newValue);
   };
 
-  const handleChipDelete = chipToDelete => () => {
-    setDates(prevDates => prevDates.filter(date => date !== chipToDelete));
+  const handleChipDelete = (chipToDelete) => () => {
+    setDates((prevDates) => prevDates.filter((date) => date !== chipToDelete));
   };
 
-  const handleChipAdd = event => {
+  const handleChipAdd = (event) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
-      setDates(prevDates => [...prevDates, inputValue.trim()]);
+      setDates((prevDates) => [...prevDates, inputValue.trim()]);
       setInputValue("");
     }
-  };
-
-  const renderTags = (value, getTagProps) => {
-    const maxTags = 3;
-    const limitedValue = value.slice(0, maxTags);
-    const remainingCount = value.length - maxTags;
-    
-    return (
-      <>
-        {limitedValue.map((option, index) => (
-          <Chip
-            key={index}
-            label={option}
-            onDelete={handleChipDelete(option)}
-            {...getTagProps({ index })}
-          />
-        ))}
-        {remainingCount > 0 && (
-          <>+{remainingCount}</>
-        )}
-      </>
-    );
   };
 
   useEffect(() => {
@@ -81,7 +55,7 @@ const Demo = () => {
         inputRef.current.blur();
       }
     };
-  
+
     if (open) {
       // Listen for focus event on Autocomplete
       document.addEventListener("focus", handleFocus, true);
@@ -89,7 +63,7 @@ const Demo = () => {
       // Remove focus event listener when Autocomplete is closed
       document.removeEventListener("focus", handleFocus, true);
     }
-  
+
     return () => {
       // Cleanup: remove event listener when component unmounts
       document.removeEventListener("focus", handleFocus, true);
@@ -109,7 +83,6 @@ const Demo = () => {
     sx: { width: 500 },
     onChange: (_, newValue) => setDates(newValue),
     onInputChange: handleInputChange,
-    renderTags: renderTags,
     renderInput: (params) => (
       <TextField
         {...params}
@@ -122,13 +95,22 @@ const Demo = () => {
         }}
       />
     ),
+    renderTags: (value) =>
+      value.map((option, index) => (
+        <Chip
+          key={`tag-${index}`}
+          label={option}
+          onDelete={handleChipDelete(option)}
+          sx={{ margin: theme.spacing(0.25) }}
+        />
+      )),
   };
 
   return (
     <BoxRoot>
       <MultipleDatePicker
         open={open}
-        selectedDates={dates.map(date => new Date(date))}
+        selectedDates={dates.map((date) => new Date(date))}
         onCancel={onCancel}
         onSubmit={onSubmit}
       />
