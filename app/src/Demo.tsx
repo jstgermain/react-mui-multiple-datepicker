@@ -47,7 +47,7 @@ const Demo: React.FC = () => {
     },
     []
   );
-  
+
   const handleChipDelete = useCallback(
     (chipToDelete: string) => () => {
       setDates((prevDates) =>
@@ -99,7 +99,7 @@ const Demo: React.FC = () => {
     onOpen: toggleOpen,
     limitTags: 3,
     sx: { width: 500 },
-    onChange: (_: any, newValue: string | string[] | null) => {
+    onChange: (_: any, newValue: string | readonly string[] | null) => {
       if (Array.isArray(newValue)) {
         setDates(newValue);
       }
