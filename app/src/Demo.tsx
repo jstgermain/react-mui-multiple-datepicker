@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Chip, styled, Autocomplete, TextField, useTheme } from "@mui/material";
+import {
+  Chip,
+  styled,
+  Autocomplete,
+  TextField,
+  useTheme,
+  Theme,
+} from "@mui/material";
 import MultipleDatePicker from "./lib";
 import EventIcon from "@mui/icons-material/Event";
 
-const BoxRoot = styled("div")(({ theme }) => ({
+const BoxRoot = styled("div")(({ theme }: { theme: Theme }) => ({
   backgroundColor: theme.palette.background.default,
   minHeight: "100vh",
   display: "flex",
@@ -12,12 +19,12 @@ const BoxRoot = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-const Demo = () => {
+const Demo: React.FC = () => {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const [dates, setDates] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const inputRef = useRef(null); // Create a ref for the TextField component
+  const [open, setOpen] = useState<boolean>(false);
+  const [dates, setDates] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null); // Create a ref for the TextField component
 
   const toggleOpen = useCallback(() => {
     setOpen((o) => !o);
@@ -28,26 +35,37 @@ const Demo = () => {
 
   const onCancel = useCallback(() => setOpen(false), []);
 
-  const onSubmit = useCallback((selectedDates) => {
+  const onSubmit = useCallback((selectedDates: Date[]) => {
     setDates(selectedDates.map((date) => date.toLocaleDateString()));
     setOpen(false);
-    inputRef.current.blur();
+    inputRef.current?.blur();
   }, []);
 
-  const handleInputChange = (_, newValue) => {
-    setInputValue(newValue);
-  };
+  const handleInputChange = useCallback(
+    (_event: React.SyntheticEvent, newValue: string) => {
+      setInputValue(newValue);
+    },
+    []
+  );
+  
+  const handleChipDelete = useCallback(
+    (chipToDelete: string) => () => {
+      setDates((prevDates) =>
+        prevDates.filter((date) => date !== chipToDelete)
+      );
+    },
+    []
+  );
 
-  const handleChipDelete = (chipToDelete) => () => {
-    setDates((prevDates) => prevDates.filter((date) => date !== chipToDelete));
-  };
-
-  const handleChipAdd = (event) => {
-    if (event.key === "Enter" && inputValue.trim() !== "") {
-      setDates((prevDates) => [...prevDates, inputValue.trim()]);
-      setInputValue("");
-    }
-  };
+  const handleChipAdd = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === "Enter" && inputValue.trim() !== "") {
+        setDates((prevDates) => [...prevDates, inputValue.trim()]);
+        setInputValue("");
+      }
+    },
+    [inputValue]
+  );
 
   useEffect(() => {
     const handleFocus = () => {
@@ -81,9 +99,13 @@ const Demo = () => {
     onOpen: toggleOpen,
     limitTags: 3,
     sx: { width: 500 },
-    onChange: (_, newValue) => setDates(newValue),
+    onChange: (_: any, newValue: string | string[] | null) => {
+      if (Array.isArray(newValue)) {
+        setDates(newValue);
+      }
+    },
     onInputChange: handleInputChange,
-    renderInput: (params) => (
+    renderInput: (params: any) => (
       <TextField
         {...params}
         inputRef={inputRef}
@@ -95,7 +117,7 @@ const Demo = () => {
         }}
       />
     ),
-    renderTags: (value) =>
+    renderTags: (value: string[]) =>
       value.map((option, index) => (
         <Chip
           key={`tag-${index}`}
